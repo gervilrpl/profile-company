@@ -1,8 +1,10 @@
+"use client";
 import Image from "next/image";
 import { MenuLandingPage } from "./components/navigation-menu/page";
 import { Button } from "@/components/ui/button";
 import { LandingPageHero } from "./components/landing-page hero/page";
-import { SearchIcon } from "lucide-react"
+import { SearchIcon, X } from "lucide-react"
+import { useState } from "react";
 import {
   Field,
   FieldDescription,
@@ -15,6 +17,7 @@ import {
 } from "@/components/ui/input-group"
 
 export default function Home() {
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
   return (
     <main className="relative relative w-full bg-white dark:bg-black">
       <div className="relative z-0 -mt-[96px]">
@@ -33,18 +36,19 @@ export default function Home() {
           {/* login */}
           <div className="flex items-center justify-end p-4">
             <Button
+              onClick={() => setIsLoginOpen(true)}
               className="
-            bg-white 
-            border border-gray-300 
-            text-orange-500 
-            hover:bg-gray-100 
-            dark:bg-gray-800 
-            dark:border-gray-700 
-            dark:text-orange-400
-            text-[16px]
-            font-semibold
-            rounded-full
-            p-[20px]"
+              bg-white 
+              border border-gray-300 
+              text-orange-500 
+              hover:bg-gray-100 
+              dark:bg-gray-800 
+              dark:border-gray-700 
+              dark:text-orange-400
+              text-[16px]
+              font-semibold
+              rounded-full
+              p-[20px]"
               size="lg"
             >
               Login
@@ -52,25 +56,39 @@ export default function Home() {
           </div>
         </div>
       </div>
-       <div className="flex relative z-[100] items-center justify-center p-2 bg-white shadow-lg w-[500px] h-auto rounded-[5px] mt-[-500px] mx-auto">
-            <Field className="max-w-sm">
-              <FieldLabel htmlFor="inline-start-input">Email</FieldLabel>
+      {isLoginOpen && (
+     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm">
+          <div className="relative w-full max-w-[500px] rounded-xl bg-white p-6 shadow-2xl dark:bg-gray-900">
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              aria-label="Tutup form login"
+              onClick={() => setIsLoginOpen(false)}
+              className="absolute right-3 top-3"
+            >
+              <X />
+            </Button>
+            <Field className="w-full space-y-4 pt-2">
+              <FieldLabel htmlFor="email-input">Email</FieldLabel>
               <InputGroup>
-                <InputGroupInput id="inline-start-input" placeholder="Email..." />
+                <InputGroupInput id="email-input" placeholder="Email" />
                 <InputGroupAddon align="inline-start">
                   <SearchIcon className="text-muted-foreground" />
                 </InputGroupAddon>
               </InputGroup>
-              <FieldLabel htmlFor="inline-start-input">Password</FieldLabel>
+              <FieldLabel htmlFor="password-input">Password</FieldLabel>
               <InputGroup>
-                <InputGroupInput id="inline-start-input" placeholder="Password..." />
+                <InputGroupInput id="password-input" type="password" placeholder="Password" />
                 <InputGroupAddon align="inline-start">
                   <SearchIcon className="text-muted-foreground" />
                 </InputGroupAddon>
               </InputGroup>
-              <button>Submit</button>
+              <Button type="submit" className="w-full">Submit</Button>
             </Field>
           </div>
+        </div>
+             )}
     </main>
 
 
